@@ -5,6 +5,7 @@ import {addNavigationHelpers} from 'react-navigation';
 import {Font} from 'expo';
 import MainNavigation from './MainNavigation';
 import MenuBottom from './container/MenuBottom';
+import Login from './screen/Login';
 
 class Main extends React.Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class Main extends React.Component {
 
         this.state = {
             loaded: false,
+            logged: false,
         };
     }
 
@@ -30,6 +32,10 @@ class Main extends React.Component {
     render() {
         if (!this.state.loaded) {
             return null;
+        }
+
+        if (!this.state.logged) {
+            return <Login onLogin={() => this.setState({logged: true})} />;
         }
 
         return (
