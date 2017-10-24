@@ -77,7 +77,7 @@ export default class CouponRow extends Component {
                             styles.price,
                             this.props.used ? styles.usedPrice : null,
                         ]}>
-                        {this.props.price} €
+                        {this.props.price}
                     </Text>
                 </View>
                 <View style={styles.arrowContainer}>
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
         paddingLeft: 24,
         alignItems: 'center',
         fontSize: 20,
+        letterSpacing: -1,
     },
     arrow: {
         fontFamily: Constants.TITILLIUM_BOLD,
