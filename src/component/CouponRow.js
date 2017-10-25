@@ -29,6 +29,12 @@ export default class CouponRow extends Component {
             case 'Concerti':
                 icon = require('../res/icon-concerti-06c.png');
                 break;
+            case 'Eventi culturali':
+                icon = require('../res/icon-eventi-06c.png');
+                break;
+            case 'Musei, monumenti, parchi naturali':
+                icon = require('../res/icon-musei-06c.png');
+                break;
         }
 
         if (this.props.merchant) {

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {View, FlatList} from 'react-native';
+import {FlatList} from 'react-native';
 import CouponRow from '../component/CouponRow';
+import CouponHeader from '../component/CouponHeader';
 
 export default class Coupon extends Component {
     static navigationOptions = {
@@ -8,6 +9,14 @@ export default class Coupon extends Component {
     };
 
     render() {
+        let headerTextStart,
+            headerTextQuantity = '1 buono',
+            headerTextEnd = ' ancora da spendere';
+        if (headerTextQuantity == '1 buono') {
+            headerTextStart = "C'è ";
+        } else {
+            headerTextStart = 'Ci sono ';
+        }
         const coupons = [
             {
                 category: 'Cinema',
@@ -25,6 +34,16 @@ export default class Coupon extends Component {
                 price: '128,00',
             },
             {
+                category: 'Musei, monumenti, parchi naturali',
+                description: 'Abbonamento / Card',
+                price: '150,00',
+            },
+            {
+                category: 'Eventi culturali',
+                description: 'Abbonamento / Card',
+                price: '18,00',
+            },
+            {
                 used: true,
                 category: 'Libri',
                 description: 'ebook',
@@ -37,21 +56,6 @@ export default class Coupon extends Component {
                 description: 'Abbonamento / Card',
                 merchant: 'Nuovo Cinema Paradiso',
                 price: '99,00',
-            },
-            {
-                category: 'Cinema',
-                description: "Biglietto d'ingresso",
-                price: '8,00',
-            },
-            {
-                category: 'Concerti',
-                description: "Biglietto d'ingresso",
-                price: '56,00',
-            },
-            {
-                category: 'Teatro e danza',
-                description: 'Abbonamento / Card',
-                price: '128,00',
             },
             {
                 used: true,
@@ -70,6 +74,13 @@ export default class Coupon extends Component {
         ];
         return (
             <FlatList
+                ListHeaderComponent={() => (
+                    <CouponHeader
+                        headerTextStart={headerTextStart}
+                        headerTextQuantity={headerTextQuantity}
+                        headerTextEnd={headerTextEnd}
+                    />
+                )}
                 data={coupons}
                 renderItem={({item}) => (
                     <CouponRow
