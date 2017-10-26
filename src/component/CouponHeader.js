@@ -5,20 +5,23 @@ import * as Constants from '../common/constants';
 
 export default class CouponHeader extends Component {
     static propTypes = {
-        headerTextStart: PropTypes.string.isRequired,
-        headerTextQuantity: PropTypes.string.isRequired,
-        headerTextEnd: PropTypes.string.isRequired,
+        coupons: PropTypes.array.isRequired,
     };
 
     render() {
+        const couponsUnused = this.props.coupons.filter(coupon => !coupon.used)
+            .length;
+
         return (
             <View style={styles.headerContainer}>
                 <Text style={styles.text}>
-                    {this.props.headerTextStart}
+                    {couponsUnused === 1 ? "C'è " : 'Ci sono '}
                     <Text style={styles.textBold}>
-                        {this.props.headerTextQuantity}
+                        {couponsUnused === 1
+                            ? '1 buono '
+                            : couponsUnused + ' buoni '}
                     </Text>
-                    {this.props.headerTextEnd}
+                    ancora da spendere
                 </Text>
             </View>
         );

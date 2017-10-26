@@ -5,14 +5,6 @@ import CouponHeader from '../component/CouponHeader';
 
 export default class CouponList extends Component {
     render() {
-        let headerTextStart,
-            headerTextQuantity = '1 buono',
-            headerTextEnd = ' ancora da spendere';
-        if (headerTextQuantity == '1 buono') {
-            headerTextStart = "C'è ";
-        } else {
-            headerTextStart = 'Ci sono ';
-        }
         const coupons = [
             {
                 category: 'Cinema',
@@ -70,13 +62,7 @@ export default class CouponList extends Component {
         ];
         return (
             <FlatList
-                ListHeaderComponent={() => (
-                    <CouponHeader
-                        headerTextStart={headerTextStart}
-                        headerTextQuantity={headerTextQuantity}
-                        headerTextEnd={headerTextEnd}
-                    />
-                )}
+                ListHeaderComponent={() => <CouponHeader coupons={coupons} />}
                 data={coupons}
                 renderItem={({item}) => (
                     <CouponRow
