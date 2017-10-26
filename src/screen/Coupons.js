@@ -1,97 +1,49 @@
-import React, {Component} from 'react';
-import {FlatList} from 'react-native';
-import CouponRow from '../component/CouponRow';
-import CouponHeader from '../component/CouponHeader';
+import * as Constants from '../common/constants';
+import {TabNavigator, TabBarTop} from 'react-navigation';
+import CouponList from '../container/CouponList';
 
-export default class Coupon extends Component {
-    static navigationOptions = {
-        title: 'I tuoi buoni',
-    };
-
-    render() {
-        let headerTextStart,
-            headerTextQuantity = '1 buono',
-            headerTextEnd = ' ancora da spendere';
-        if (headerTextQuantity == '1 buono') {
-            headerTextStart = "C'è ";
-        } else {
-            headerTextStart = 'Ci sono ';
-        }
-        const coupons = [
-            {
-                category: 'Cinema',
-                description: "Biglietto d'ingresso",
-                price: '8,00',
+export default TabNavigator(
+    {
+        'coupons/all': {
+            screen: CouponList,
+            navigationOptions: {
+                title: 'I tuoi buoni',
+                tabBarLabel: 'TUTTI',
             },
-            {
-                category: 'Concerti',
-                description: "Biglietto d'ingresso",
-                price: '56,00',
+        },
+        'coupons/unused': {
+            screen: CouponList,
+            navigationOptions: {
+                title: 'I tuoi buoni',
+                tabBarLabel: 'DA SPENDERE',
             },
-            {
-                category: 'Teatro e danza',
-                description: 'Abbonamento / Card',
-                price: '128,00',
+        },
+        used: {
+            screen: CouponList,
+            navigationOptions: {
+                title: 'I tuoi buoni',
+                tabBarLabel: 'GIÀ SPESI',
             },
-            {
-                category: 'Musei, monumenti, parchi naturali',
-                description: 'Abbonamento / Card',
-                price: '150,00',
+        },
+    },
+    {
+        tabBarComponent: TabBarTop,
+        tabBarPosition: 'top',
+        animationEnabled: true,
+        tabBarOptions: {
+            labelStyle: {
+                fontSize: 14,
+                fontFamily: Constants.TITILLIUM_BOLD,
             },
-            {
-                category: 'Eventi culturali',
-                description: 'Abbonamento / Card',
-                price: '18,00',
+            tabStyle: {
+                height: 48,
             },
-            {
-                used: true,
-                category: 'Libri',
-                description: 'ebook',
-                merchant: 'Libreria Leggidipiù',
-                price: '5,00',
+            indicatorStyle: {
+                backgroundColor: Constants.WHITE,
             },
-            {
-                used: true,
-                category: 'Cinema',
-                description: 'Abbonamento / Card',
-                merchant: 'Nuovo Cinema Paradiso',
-                price: '99,00',
+            style: {
+                backgroundColor: Constants.SECONDAY_BLUE,
             },
-            {
-                used: true,
-                category: 'Libri',
-                description: 'ebook',
-                merchant: 'Libreria Leggidipiù',
-                price: '5,00',
-            },
-            {
-                used: true,
-                category: 'Cinema',
-                description: 'Abbonamento / Card',
-                merchant: 'Nuovo Cinema Paradiso',
-                price: '99,00',
-            },
-        ];
-        return (
-            <FlatList
-                ListHeaderComponent={() => (
-                    <CouponHeader
-                        headerTextStart={headerTextStart}
-                        headerTextQuantity={headerTextQuantity}
-                        headerTextEnd={headerTextEnd}
-                    />
-                )}
-                data={coupons}
-                renderItem={({item}) => (
-                    <CouponRow
-                        used={item.used}
-                        category={item.category}
-                        description={item.description}
-                        merchant={item.merchant}
-                        price={item.price}
-                    />
-                )}
-            />
-        );
-    }
-}
+        },
+    },
+);
