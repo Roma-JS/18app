@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import * as Constants from '../common/constants';
+import Categories from '../common/categories';
 
 export default class CouponRow extends Component {
     static propTypes = {
@@ -14,28 +15,6 @@ export default class CouponRow extends Component {
 
     render() {
         let merchant = null;
-        let icon = null;
-
-        switch (this.props.category) {
-            case 'Cinema':
-                icon = require('../res/icon-cinema-06c.png');
-                break;
-            case 'Libri':
-                icon = require('../res/icon-libri-06c.png');
-                break;
-            case 'Teatro e danza':
-                icon = require('../res/icon-teatro-06c.png');
-                break;
-            case 'Concerti':
-                icon = require('../res/icon-concerti-06c.png');
-                break;
-            case 'Eventi culturali':
-                icon = require('../res/icon-eventi-06c.png');
-                break;
-            case 'Musei, monumenti, parchi naturali':
-                icon = require('../res/icon-musei-06c.png');
-                break;
-        }
 
         if (this.props.merchant) {
             merchant = (
@@ -53,7 +32,7 @@ export default class CouponRow extends Component {
             <View style={styles.rowContainer}>
                 <View style={styles.iconContainer}>
                     <Image
-                        source={icon}
+                        source={Categories[this.props.category].icon}
                         style={[
                             styles.icon,
                             this.props.used ? styles.iconUsed : null,
@@ -66,7 +45,7 @@ export default class CouponRow extends Component {
                             styles.category,
                             this.props.used ? styles.usedText : null,
                         ]}>
-                        {this.props.category}
+                        {Categories[this.props.category].name}
                     </Text>
                     <Text
                         style={[
