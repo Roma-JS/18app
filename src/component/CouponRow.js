@@ -1,16 +1,21 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import * as Constants from '../common/constants';
+import {NavigationActions} from 'react-navigation';
 import Categories from '../common/categories';
 
-export default class CouponRow extends Component {
+class CouponRow extends Component {
     static propTypes = {
         category: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-        merchant: PropTypes.string,
-        used: PropTypes.bool,
+        merchant: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+        }),
+        used: PropTypes.instanceOf(Date),
         price: PropTypes.string.isRequired,
+        onPress: PropTypes.func,
     };
 
     render() {
@@ -29,55 +34,65 @@ export default class CouponRow extends Component {
         }
 
         return (
-            <View style={styles.rowContainer}>
-                <View style={styles.iconContainer}>
-                    <Image
-                        source={Categories[this.props.category].icon}
-                        style={[
-                            styles.icon,
-                            this.props.used ? styles.iconUsed : null,
-                        ]}
-                    />
+            <TouchableOpacity onPress={this.props.onPress}>
+                <View style={styles.rowContainer}>
+                    <View style={styles.iconContainer}>
+                        <Image
+                            source={Categories[this.props.category].icon}
+                            style={[
+                                styles.icon,
+                                this.props.used ? styles.iconUsed : null,
+                            ]}
+                        />
+                    </View>
+                    <View style={styles.titleContainer}>
+                        <Text
+                            style={[
+                                styles.category,
+                                this.props.used ? styles.usedText : null,
+                            ]}>
+                            {Categories[this.props.category].name}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.description,
+                                this.props.used ? styles.usedText : null,
+                            ]}>
+                            {this.props.description}
+                        </Text>
+                        {merchant}
+                    </View>
+                    <View>
+                        <Text
+                            style={[
+                                styles.price,
+                                this.props.used ? styles.usedPrice : null,
+                            ]}>
+                            {this.props.price}
+                        </Text>
+                    </View>
+                    <View style={styles.arrowContainer}>
+                        <Text
+                            style={[
+                                styles.arrow,
+                                this.props.used ? styles.usedText : null,
+                            ]}>
+                            >
+                        </Text>
+                    </View>
                 </View>
-                <View style={styles.titleContainer}>
-                    <Text
-                        style={[
-                            styles.category,
-                            this.props.used ? styles.usedText : null,
-                        ]}>
-                        {Categories[this.props.category].name}
-                    </Text>
-                    <Text
-                        style={[
-                            styles.description,
-                            this.props.used ? styles.usedText : null,
-                        ]}>
-                        {this.props.description}
-                    </Text>
-                    {merchant}
-                </View>
-                <View>
-                    <Text
-                        style={[
-                            styles.price,
-                            this.props.used ? styles.usedPrice : null,
-                        ]}>
-                        {this.props.price}
-                    </Text>
-                </View>
-                <View style={styles.arrowContainer}>
-                    <Text
-                        style={[
-                            styles.arrow,
-                            this.props.used ? styles.usedText : null,
-                        ]}>
-                        >
-                    </Text>
-                </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+    onPress: () => dispatch(NavigationActions.navigate({routeName: 'Coupon'})),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CouponRow);
 
 const styles = StyleSheet.create({
     icon: {
