@@ -20,7 +20,7 @@ export default StackNavigator(
         shops: {
             screen: Shops,
         },
-        Coupon: {
+        'coupons/details': {
             screen: Coupon,
         },
     },

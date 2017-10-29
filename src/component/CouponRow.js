@@ -8,6 +8,7 @@ import Categories from '../common/categories';
 
 class CouponRow extends Component {
     static propTypes = {
+        code: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
         merchant: PropTypes.shape({
@@ -34,7 +35,8 @@ class CouponRow extends Component {
         }
 
         return (
-            <TouchableOpacity onPress={this.props.onPress}>
+            <TouchableOpacity
+                onPress={() => this.props.onPress(this.props.code)}>
                 <View style={styles.rowContainer}>
                     <View style={styles.iconContainer}>
                         <Image
@@ -68,7 +70,7 @@ class CouponRow extends Component {
                                 styles.price,
                                 this.props.used ? styles.usedPrice : null,
                             ]}>
-                            {this.props.price}
+                            {this.props.price.toFixed(2)}
                         </Text>
                     </View>
                     <View style={styles.arrowContainer}>
@@ -89,7 +91,15 @@ class CouponRow extends Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-    onPress: () => dispatch(NavigationActions.navigate({routeName: 'Coupon'})),
+    onPress: code =>
+        dispatch(
+            NavigationActions.navigate({
+                routeName: 'coupons/details',
+                params: {
+                    couponCode: code,
+                },
+            }),
+        ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CouponRow);

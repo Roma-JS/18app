@@ -1,64 +1,62 @@
 import React, {Component} from 'react';
 import {View, ScrollView, Text, Image, StyleSheet} from 'react-native';
 import moment from 'moment';
+import {connect} from 'react-redux';
+import {cancelCoupon} from '../stores/coupons';
 import Button from '../component/Button';
 import * as Constants from '../common/constants';
 import Categories from '../common/categories';
 
-const DATA = {
-    //used: new Date('2017-03-12T23:12:00'),
-    category: 'Cinema',
-    description: 'Abbonamento / Card',
-    merchant: {
-        name: 'Nuovo Cinema Paradiso',
-        place: 'San Valentino in Abbruzzo Citerione (PE)',
-    },
-    price: '99,00',
-    code: '45DH6789',
-};
-
-export default class Coupon extends Component {
+class Coupon extends Component {
     static navigationOptions = {
         title: 'Dettagli del buono',
     };
 
     _renderMerchant() {
-        if (!DATA.used) {
+        if (!this.props.coupon.used) {
             return null;
         }
 
         return (
             <View style={styles.headerContainer}>
-                <Text style={styles.headerTitle}>{DATA.merchant.name}</Text>
+                <Text style={styles.headerTitle}>
+                    {this.props.coupon.merchant.name}
+                </Text>
                 <View style={styles.headerSubtitle}>
                     <Image
                         style={styles.headerIcon}
                         source={require('../res/icon-marker-white.png')}
                     />
-                    <Text style={styles.headerText}>{DATA.merchant.place}</Text>
+                    <Text style={styles.headerText}>
+                        {this.props.coupon.merchant.place}
+                    </Text>
                 </View>
             </View>
         );
     }
 
     _renderUsedTitle() {
-        if (!DATA.used) {
+        if (!this.props.coupon.used) {
             return null;
         }
 
         return (
             <Text style={styles.couponUsedText}>
                 Buono utilizzato il{' '}
-                {moment(DATA.used).format('DD MMMM Y [ alle ore ] HH:mm')}
+                {moment(this.props.coupon.used).format(
+                    'DD MMMM Y [ alle ore ] HH:mm',
+                )}
             </Text>
         );
     }
 
     _renderBottom() {
-        if (DATA.used) {
+        if (this.props.coupon.used) {
             return (
                 <View style={styles.buttonContainer}>
                     <Button
+                        onPress={() =>
+                            this.props.deleteCoupon(this.props.coupon)}
                         icon={require('../res/icon-marker-white.png')}
                         text="DETTAGLI DEL NEGOZIO"
                     />
@@ -85,7 +83,7 @@ export default class Coupon extends Component {
                     <View style={styles.iconContainer}>
                         <Image
                             style={styles.icon}
-                            source={Categories[DATA.category].icon}
+                            source={Categories[this.props.coupon.category].icon}
                         />
                     </View>
                     <Text style={styles.disclaimerIdentity}>Mario Rossi</Text>
@@ -116,10 +114,14 @@ export default class Coupon extends Component {
                         <View style={styles.iconContainer}>
                             <Image
                                 style={styles.icon}
-                                source={Categories[DATA.category].icon}
+                                source={
+                                    Categories[this.props.coupon.category].icon
+                                }
                             />
                         </View>
-                        <Text style={styles.categoryText}>{DATA.category}</Text>
+                        <Text style={styles.categoryText}>
+                            {this.props.coupon.category}
+                        </Text>
                         <Text style={styles.textLight}>Categoria</Text>
                     </View>
                     <View style={styles.rowContainer}>
@@ -130,7 +132,7 @@ export default class Coupon extends Component {
                             />
                         </View>
                         <Text style={styles.productText}>
-                            {DATA.description}
+                            {this.props.coupon.description}
                         </Text>
                         <Text style={styles.textLight}>Prodotto</Text>
                     </View>
@@ -144,9 +146,9 @@ export default class Coupon extends Component {
                         <Text
                             style={[
                                 styles.valueText,
-                                DATA.used ? styles.usedText : null,
+                                this.props.coupon.used ? styles.usedText : null,
                             ]}>
-                            {DATA.price}
+                            {this.props.coupon.price.toFixed(2)}
                         </Text>
                         <Text style={styles.textLight}>Valore</Text>
                     </View>
@@ -157,7 +159,9 @@ export default class Coupon extends Component {
                                 source={require('../res/icon-qrcode.png')}
                             />
                         </View>
-                        <Text style={styles.codeText}>{DATA.code}</Text>
+                        <Text style={styles.codeText}>
+                            {this.props.coupon.code}
+                        </Text>
                         <Text style={styles.textLight}>Codice</Text>
                     </View>
                 </View>
@@ -166,6 +170,18 @@ export default class Coupon extends Component {
         );
     }
 }
+
+const mapStateToProps = (state, props) => ({
+    coupon: state.coupons.items.filter(
+        coupon => coupon.code === props.navigation.state.params.couponCode,
+    )[0],
+});
+
+const mapDispatchToProps = dispatch => ({
+    deleteCoupon: coupon => dispatch(cancelCoupon(coupon)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Coupon);
 
 const styles = StyleSheet.create({
     headerContainer: {
