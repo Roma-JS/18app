@@ -32,32 +32,48 @@ export default class CouponList extends Component {
                 price: '18,00',
             },
             {
-                used: true,
+                used: new Date('2017', '03', '12', '23', '12'),
                 category: 'Libri',
                 description: 'ebook',
-                merchant: 'Libreria Leggidipiù',
+                merchant: {
+                    name: 'Libreria Leggidipiù',
+                    place: 'San Valentino in Abbruzzo Citerione (PE)',
+                },
                 price: '5,00',
+                code: '45DH6789',
             },
             {
-                used: true,
+                used: new Date('2017', '03', '12', '23', '12'),
                 category: 'Cinema',
                 description: 'Abbonamento / Card',
-                merchant: 'Nuovo Cinema Paradiso',
+                merchant: {
+                    name: 'Nuovo Cinema Paradiso',
+                    place: 'San Valentino in Abbruzzo Citerione (PE)',
+                },
                 price: '99,00',
+                code: '45DH6789',
             },
             {
-                used: true,
+                used: new Date('2017', '03', '12', '23', '12'),
                 category: 'Libri',
                 description: 'ebook',
-                merchant: 'Libreria Leggidipiù',
+                merchant: {
+                    name: 'Libreria Leggidipiù',
+                    place: 'San Valentino in Abbruzzo Citerione (PE)',
+                },
                 price: '5,00',
+                code: '45DH6789',
             },
             {
-                used: true,
+                used: new Date('2017', '03', '12', '23', '12'),
                 category: 'Cinema',
                 description: 'Abbonamento / Card',
-                merchant: 'Nuovo Cinema Paradiso',
+                merchant: {
+                    name: 'Nuovo Cinema Paradiso',
+                    place: 'San Valentino in Abbruzzo Citerione (PE)',
+                },
                 price: '99,00',
+                code: '45DH6789',
             },
         ];
         return (

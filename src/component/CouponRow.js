@@ -23,7 +23,7 @@ export default class CouponRow extends Component {
                         styles.merchant,
                         this.props.used ? styles.merchant : null,
                     ]}>
-                    {this.props.merchant}
+                    {this.props.merchant.name}
                 </Text>
             );
         }

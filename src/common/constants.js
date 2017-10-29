@@ -7,6 +7,8 @@ export const SECONDARY_GREY = '#A9B1B8';
 export const DARK_GREY = '#30373D';
 export const GREY = '#65727D';
 export const LINE_GREY = '#F0F0F0';
+export const RED = '#D0021B';
+export const ICON_GREY = '#30373D';
 
 export const TITILLIUM_REGULAR = 'titillium-regular';
 export const TITILLIUM_BOLD = 'titillium-bold';
