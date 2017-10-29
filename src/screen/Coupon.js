@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, ScrollView, Text, Image, StyleSheet} from 'react-native';
 import moment from 'moment';
 import Button from '../component/Button';
 import * as Constants from '../common/constants';
 import Categories from '../common/categories';
 
 const DATA = {
-    used: new Date('2017-03-12T23:12:00'),
+    //used: new Date('2017-03-12T23:12:00'),
     category: 'Cinema',
     description: 'Abbonamento / Card',
     merchant: {
@@ -18,28 +18,100 @@ const DATA = {
 };
 
 export default class Coupon extends Component {
+    static navigationOptions = {
+        title: 'Dettagli del buono',
+    };
+
+    _renderMerchant() {
+        if (!DATA.used) {
+            return null;
+        }
+
+        return (
+            <View style={styles.headerContainer}>
+                <Text style={styles.headerTitle}>{DATA.merchant.name}</Text>
+                <View style={styles.headerSubtitle}>
+                    <Image
+                        style={styles.headerIcon}
+                        source={require('../res/icon-marker-white.png')}
+                    />
+                    <Text style={styles.headerText}>{DATA.merchant.place}</Text>
+                </View>
+            </View>
+        );
+    }
+
+    _renderUsedTitle() {
+        if (!DATA.used) {
+            return null;
+        }
+
+        return (
+            <Text style={styles.couponUsedText}>
+                Buono utilizzato il{' '}
+                {moment(DATA.used).format('DD MMMM Y [ alle ore ] HH:mm')}
+            </Text>
+        );
+    }
+
+    _renderBottom() {
+        if (DATA.used) {
+            return (
+                <View style={styles.buttonContainer}>
+                    <Button
+                        icon={require('../res/icon-marker-white.png')}
+                        text="DETTAGLI DEL NEGOZIO"
+                    />
+                </View>
+            );
+        }
+
+        return (
+            //View per qrcode e barcode
+            <View>
+                <View>
+                    <Text>Qui il QRcode</Text>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        icon={require('../res/icon-marker-white.png')}
+                        text="TROVA UN NEGOZIO"
+                    />
+                </View>
+                <Text style={styles.disclaimer}>
+                    Questo buono non &egrave; cedibile e appartiene a te.
+                </Text>
+                <View style={styles.rowContainer}>
+                    <View style={styles.iconContainer}>
+                        <Image
+                            style={styles.icon}
+                            source={Categories[DATA.category].icon}
+                        />
+                    </View>
+                    <Text style={styles.disclaimerIdentity}>Mario Rossi</Text>
+                    <Text style={styles.textLight}>Intestatario</Text>
+                </View>
+                <Text style={styles.disclaimer}>
+                    Puoi annullare in ogni momento questo buono e riversare
+                    l'intero suo valore nel tuo credito
+                </Text>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        icon={require('../res/icon-marker-white.png')}
+                        text="ANNULLA QUESTO BUONO"
+                        style={styles.buttonDeleteContainer}
+                    />
+                </View>
+            </View>
+        );
+    }
+
     render() {
         return (
-            <View style={{flex: 1}}>
-                <View style={styles.headerContainer}>
-                    <Text style={styles.headerTitle}>{DATA.merchant.name}</Text>
-                    <View style={styles.headerSubtitle}>
-                        <Image
-                            style={styles.headerIcon}
-                            source={require('../res/icon-marker-white.png')}
-                        />
-                        <Text style={styles.headerText}>
-                            {DATA.merchant.place}
-                        </Text>
-                    </View>
-                </View>
+            <ScrollView style={{flex: 1}}>
+                {this._renderMerchant()}
                 <View style={{flex: 1}}>
-                    <Text style={styles.couponUsedText}>
-                        Buono utilizzato il{' '}
-                        {moment(DATA.used).format(
-                            'DD MMMM Y [ alle ore ] HH:mm',
-                        )}
-                    </Text>
+                    {this._renderUsedTitle()}
                     <View style={styles.rowContainer}>
                         <View style={styles.iconContainer}>
                             <Image
@@ -69,7 +141,13 @@ export default class Coupon extends Component {
                                 source={require('../res/icon-euro.png')}
                             />
                         </View>
-                        <Text style={styles.valueText}>{DATA.price}</Text>
+                        <Text
+                            style={[
+                                styles.valueText,
+                                DATA.used ? styles.usedText : null,
+                            ]}>
+                            {DATA.price}
+                        </Text>
                         <Text style={styles.textLight}>Valore</Text>
                     </View>
                     <View style={styles.rowContainer}>
@@ -83,13 +161,8 @@ export default class Coupon extends Component {
                         <Text style={styles.textLight}>Codice</Text>
                     </View>
                 </View>
-                <View style={styles.buttonContainer}>
-                    <Button
-                        icon={require('../res/icon-marker-white.png')}
-                        text="DETTAGLI DEL NEGOZIO"
-                    />
-                </View>
-            </View>
+                {this._renderBottom()}
+            </ScrollView>
         );
     }
 }
@@ -152,22 +225,28 @@ const styles = StyleSheet.create({
         fontFamily: Constants.TITILLIUM_REGULAR,
         fontSize: 16,
         flex: 1,
+        color: Constants.ICON_GREY,
     },
     productText: {
         fontFamily: Constants.TITILLIUM_REGULAR,
         fontSize: 16,
         flex: 1,
+        color: Constants.ICON_GREY,
     },
     valueText: {
         fontFamily: Constants.TITILLIUM_BOLD,
         fontSize: 24,
         flex: 1,
+        color: Constants.ICON_GREY,
+    },
+    usedText: {
         textDecorationLine: 'line-through',
     },
     codeText: {
         fontFamily: Constants.TITILLIUM_BOLD,
         fontSize: 24,
         flex: 1,
+        color: Constants.ICON_GREY,
     },
     textLight: {
         fontFamily: Constants.TITILLIUM_REGULAR,
@@ -179,4 +258,25 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 17,
     },
+    buttonDeleteContainer: {
+        backgroundColor: Constants.RED,
+    },
+    disclaimer: {
+        fontFamily: Constants.TITILLIUM_REGULAR,
+        fontSize: 14,
+        color: Constants.LIGHT_GREY,
+        paddingLeft: 24,
+        paddingRight: 21,
+    },
+    disclaimerIdentity: {
+        color: Constants.ICON_GREY,
+        fontFamily: Constants.TITILLIUM_BOLD,
+        fontSize: 16,
+        flex: 1,
+    },
+    // disclaimerMinor: {
+    //     fontFamily: Constants.TITILLIUM_REGULAR,
+    //     fontSize: 12,
+    //     color: Constants.LIGHT_GREY,
+    // },
 });
