@@ -42,7 +42,7 @@ export default TabNavigator(
                 backgroundColor: Constants.WHITE,
             },
             style: {
-                backgroundColor: Constants.SECONDAY_BLUE,
+                backgroundColor: Constants.SECONDARY_BLUE,
             },
         },
     },
