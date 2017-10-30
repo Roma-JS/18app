@@ -1,22 +1,10 @@
 import React, {Component} from 'react';
 import {View, ScrollView, Text, Image, StyleSheet} from 'react-native';
+
+import {connect} from 'react-redux';
 import * as Constants from '../common/constants';
 
-const identity = {
-    name: 'Mario',
-    surname: 'Rossi',
-    fiscalCode: 'RSSMRA98T10A562S',
-    birthDay: '10/12/1998',
-    birthPlace: 'San Giuliano Terme (PI)',
-    address: 'Viale della Repubblica 171',
-    postalCode: '31100',
-    city: 'Treviso',
-    province: '(TV)',
-    mobile: '3331234567',
-    email: 'mario.rossi@email.it',
-};
-
-export default class Profile extends Component {
+class Profile extends Component {
     static navigationOptions = {
         title: 'Il tuo profilo',
     };
@@ -26,30 +14,40 @@ export default class Profile extends Component {
             <ScrollView style={{flex: 1, paddingTop: 30}}>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textTop}>
-                        {identity.name} {identity.surname}
+                        {this.props.user.name} {this.props.user.surname}
                     </Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.text}>Codice fiscale</Text>
-                    <Text style={styles.textInfo}>{identity.fiscalCode}</Text>
+                    <Text style={styles.textInfo}>
+                        {this.props.user.fiscalCode}
+                    </Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.text}>Data e luogo di nascita</Text>
-                    <Text style={styles.textInfo}>{identity.birthDay}</Text>
-                    <Text style={styles.textInfo}>{identity.birthPlace}</Text>
+                    <Text style={styles.textInfo}>
+                        {this.props.user.birthDay}
+                    </Text>
+                    <Text style={styles.textInfo}>
+                        {this.props.user.birthPlace}
+                    </Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.text}>Residenza</Text>
-                    <Text style={styles.textInfo}>{identity.address}</Text>
                     <Text style={styles.textInfo}>
-                        {identity.postalCode} {identity.city}{' '}
-                        {identity.province}
+                        {this.props.user.address}
+                    </Text>
+                    <Text style={styles.textInfo}>
+                        {this.props.user.postalCode} {this.props.user.city}{' '}
+                        {this.props.user.province}
                     </Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.text}>Recapiti</Text>
-                    <Text style={styles.textInfo}>{identity.mobile}</Text>
-                    <Text style={styles.textInfo}>{identity.email}</Text>
+                    <Text style={styles.textInfo}>
+                        {this.props.user.mobile}
+                    </Text>
+                    <Text style={styles.textInfo}>{this.props.user.email}</Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textBottom}>
@@ -99,3 +97,9 @@ const styles = StyleSheet.create({
         width: 132,
     },
 });
+
+const mapStateToProps = (state, props) => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps)(Profile);
