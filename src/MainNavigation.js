@@ -3,6 +3,7 @@ import Expo from 'expo';
 import {StackNavigator, DrawerNavigator} from 'react-navigation';
 import {Platform, StyleSheet} from 'react-native';
 import * as Constants from './common/constants';
+import Drawer from './container/Drawer';
 import Home from './screen/Home';
 import Coupons from './screen/Coupons';
 import Coupon from './screen/Coupon';
@@ -48,6 +49,7 @@ export default DrawerNavigator(
     },
     {
         drawerPosition: 'right',
+        contentComponent: Drawer,
     },
 );
 
