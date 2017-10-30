@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
+        width: Dimensions.get('screen').width,
         resizeMode: 'cover',
         alignItems: 'center',
     },
