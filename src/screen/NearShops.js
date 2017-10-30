@@ -10,6 +10,34 @@ import {
 import ShopRow from '../component/ShopRow';
 import * as Constants from '../common/constants';
 
+const nearShops = [
+    {
+        title: 'Nuovo cinema Paradiso',
+        categories: 'Cinema/Libri',
+        distance: 500,
+    },
+    {
+        title: 'The Blues Brother',
+        categories: 'concerti',
+        distance: 1300,
+    },
+    {
+        title: 'The Blues Brother',
+        categories: 'concerti',
+        distance: 1300,
+    },
+    {
+        title: 'The Blues Brother',
+        categories: 'concerti',
+        distance: 1300,
+    },
+    {
+        title: 'The Blues Brother',
+        categories: 'concerti',
+        distance: 1300,
+    },
+];
+
 export default class NearShops extends Component {
     static navigationOptions = {
         title: 'VICINO A TE',
@@ -20,33 +48,7 @@ export default class NearShops extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={[
-                        {
-                            title: 'Nuovo cinema Paradiso',
-                            categories: 'Cinema/Libri',
-                            distance: 500,
-                        },
-                        {
-                            title: 'The Blues Brother',
-                            categories: 'concerti',
-                            distance: 1300,
-                        },
-                        {
-                            title: 'The Blues Brother',
-                            categories: 'concerti',
-                            distance: 1300,
-                        },
-                        {
-                            title: 'The Blues Brother',
-                            categories: 'concerti',
-                            distance: 1300,
-                        },
-                        {
-                            title: 'The Blues Brother',
-                            categories: 'concerti',
-                            distance: 1300,
-                        },
-                    ]}
+                    data={nearShops}
                     renderItem={({item}) => <ShopRow shop={item} />}
                     ListHeaderComponent={() => (
                         <Text style={styles.headerText}>
