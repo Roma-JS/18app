@@ -6,6 +6,7 @@ import {Font} from 'expo';
 import MainNavigation from './MainNavigation';
 import MenuBottom from './container/MenuBottom';
 import Login from './screen/Login';
+import {loginAction} from './stores/user';
 
 class Main extends React.Component {
     constructor(props) {
@@ -13,7 +14,6 @@ class Main extends React.Component {
 
         this.state = {
             loaded: false,
-            logged: false,
         };
     }
 
@@ -34,8 +34,8 @@ class Main extends React.Component {
             return null;
         }
 
-        if (!this.state.logged) {
-            return <Login onLogin={() => this.setState({logged: true})} />;
+        if (!this.props.logged) {
+            return <Login onLogin={this.props.onLogin} />;
         }
 
         return (
@@ -56,7 +56,12 @@ class Main extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    logged: state.user.logged,
     nav: state.navigation,
 });
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = dispatch => ({
+    onLogin: token => dispatch(loginAction(token)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -15,10 +15,11 @@ class Home extends Component {
             <View style={styles.container}>
                 <View style={{alignItems: 'center'}}>
                     <Text style={styles.welcomeText}>
-                        Benvenuto Mario, ti restano
+                        Benvenuto {this.props.user.name}, ti restano
                     </Text>
                     <Text style={styles.amountText}>
-                        174 <Text style={styles.currency}>€</Text>
+                        {this.props.user.credit}{' '}
+                        <Text style={styles.currency}>€</Text>
                     </Text>
                 </View>
 
@@ -26,7 +27,7 @@ class Home extends Component {
                     <AnimatedCircularProgress
                         size={100}
                         width={2}
-                        fill={75}
+                        fill={(500 - this.props.user.credit) / 5}
                         rotation={0}
                         tintColor={Constants.PRIMARY_BLUE}
                         backgroundColor={Constants.AQUAMARINE}>
@@ -51,6 +52,10 @@ class Home extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
 const mapDispatchToProps = dispatch => ({
     goTo: route =>
         dispatch(
@@ -60,7 +65,7 @@ const mapDispatchToProps = dispatch => ({
         ),
 });
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 const styles = StyleSheet.create({
     container: {
