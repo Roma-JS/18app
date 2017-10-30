@@ -19,7 +19,9 @@ export default class ShopRow extends Component {
                     {this.props.shop.distance && (
                         <Text style={styles.distance}>
                             {this.props.shop.distance >= 1000
-                                ? `${this.props.shop.distance / 1000}km`
+                                ? `${(this.props.shop.distance / 1000).toFixed(
+                                      1,
+                                  )}km`
                                 : `${this.props.shop.distance}m`}
                         </Text>
                     )}
