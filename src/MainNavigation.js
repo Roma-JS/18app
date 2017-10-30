@@ -30,6 +30,9 @@ const stackNavigator = StackNavigator(
         },
     },
     {
+        cardStyle: {
+            backgroundColor: '#fff',
+        },
         navigationOptions: () => ({
             headerRight: <HeaderProfileButton />,
             headerStyle: [
