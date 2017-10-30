@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, ScrollView, Text, Image, StyleSheet} from 'react-native';
+import {NavigationActions} from 'react-navigation';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {cancelCoupon} from '../stores/coupons';
@@ -55,8 +56,6 @@ class Coupon extends Component {
             return (
                 <View style={styles.buttonContainer}>
                     <Button
-                        onPress={() =>
-                            this.props.deleteCoupon(this.props.coupon)}
                         icon={require('../res/icon-marker-white.png')}
                         text="DETTAGLI DEL NEGOZIO"
                     />
@@ -95,6 +94,8 @@ class Coupon extends Component {
                 </Text>
                 <View style={styles.buttonContainer}>
                     <Button
+                        onPress={() =>
+                            this.props.deleteCoupon(this.props.coupon)}
                         icon={require('../res/icon-marker-white.png')}
                         text="ANNULLA QUESTO BUONO"
                         style={styles.buttonDeleteContainer}
@@ -178,7 +179,10 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    deleteCoupon: coupon => dispatch(cancelCoupon(coupon)),
+    deleteCoupon: coupon => {
+        dispatch(NavigationActions.back());
+        setTimeout(() => dispatch(cancelCoupon(coupon)), 1000);
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Coupon);

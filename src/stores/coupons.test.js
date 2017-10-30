@@ -1,4 +1,4 @@
-import reducer, {LOAD, ADD} from './coupons';
+import reducer, {LOAD, ADD, CANCEL} from './coupons';
 
 describe('Coupon Reducer', () => {
     it('should return default state on init', () => {
@@ -41,5 +41,26 @@ describe('Coupon Reducer', () => {
         const nextState = reducer(initState, action);
 
         expect(nextState.items).toHaveLength(1);
+    });
+
+    it('should remove the coupon when CANCEL action is called', () => {
+        const action = {
+            type: ADD,
+            coupon: {
+                code: 'ABC',
+            },
+        };
+        const action2 = {
+            type: CANCEL,
+            coupon: {
+                code: 'ABC',
+            },
+        };
+
+        const initState = reducer(undefined, {});
+        let nextState = reducer(initState, action);
+        nextState = reducer(initState, action2);
+
+        expect(nextState.items).toHaveLength(0);
     });
 });

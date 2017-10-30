@@ -19,6 +19,7 @@ class CouponList extends Component {
                         <CouponHeader coupons={this.props.coupons} />
                     )}
                 data={this.props.coupons}
+                keyExtractor={item => item.code}
                 renderItem={({item}) => (
                     <CouponRow
                         code={item.code}

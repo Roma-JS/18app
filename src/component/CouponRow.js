@@ -15,7 +15,7 @@ class CouponRow extends Component {
             name: PropTypes.string.isRequired,
         }),
         used: PropTypes.instanceOf(Date),
-        price: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
         onPress: PropTypes.func,
     };
 
