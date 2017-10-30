@@ -2,53 +2,34 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import * as Constants from '../common/constants';
 
+const choices = [
+    {category: 'Cinema', icon: require('../res/icon-cinema-06c.png')},
+    {category: 'Concerti', icon: require('../res/icon-concerti-06c.png')},
+    {
+        category: 'Eventi Culturali',
+        icon: require('../res/icon-eventi-06c.png'),
+    },
+];
+
 export default class CategoryPicker extends Component {
     state = {open: false, selectedCategory: 'Tutte le categorie'};
 
     renderChoices() {
-        return (
-            <View style={styles.choiceContainer}>
-                <TouchableOpacity
-                    style={styles.categoryItem}
-                    onPress={() =>
-                        this.setState({
-                            open: false,
-                            selectedCategory: 'Cinema',
-                        })}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../res/icon-cinema-06c.png')}
-                    />
-                    <Text style={styles.categoryText}>Cinema</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.categoryItem}
-                    onPress={() =>
-                        this.setState({
-                            open: false,
-                            selectedCategory: 'Concerti',
-                        })}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../res/icon-concerti-06c.png')}
-                    />
-                    <Text style={styles.categoryText}>Concerti</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.categoryItem}
-                    onPress={() =>
-                        this.setState({
-                            open: false,
-                            selectedCategory: 'Eventi Culturali',
-                        })}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../res/icon-eventi-06c.png')}
-                    />
-                    <Text style={styles.categoryText}>Eventi Culturali</Text>
-                </TouchableOpacity>
-            </View>
-        );
+        const items = choices.map((el, i) => (
+            <TouchableOpacity
+                key={`${i}-${el.category}`}
+                style={styles.categoryItem}
+                onPress={() =>
+                    this.setState({
+                        open: false,
+                        selectedCategory: el.category,
+                    })}>
+                <Image style={styles.icon} source={el.icon} />
+                <Text style={styles.categoryText}>{el.category}</Text>
+            </TouchableOpacity>
+        ));
+
+        return <View style={styles.choiceContainer}>{items}</View>;
     }
 
     render() {
