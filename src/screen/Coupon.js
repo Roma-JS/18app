@@ -94,7 +94,7 @@ class Coupon extends Component {
                 </Text>
                 <View style={styles.buttonContainer}>
                     <Button
-                        icon={require('../res/trash.png')}
+                        icon={require('../res/icon-trash.png')}
                         text="ANNULLA QUESTO BUONO"
                         style={styles.buttonDelete}
                     />
