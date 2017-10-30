@@ -10,7 +10,9 @@ class Drawer extends Component {
             <View style={{flex: 1}}>
                 <View style={styles.headerContainer}>
                     <View style={styles.heading}>
-                        <Text style={styles.userText}>Mario Rossi</Text>
+                        <Text style={styles.userText}>
+                            {this.props.user.name} {this.props.user.surname}
+                        </Text>
 
                         <TouchableOpacity onPress={this.props.onClose}>
                             <Text style={styles.closeButton}>X</Text>
@@ -19,7 +21,9 @@ class Drawer extends Component {
 
                     <View style={styles.amountContainer}>
                         <Text style={styles.amountTitle}>Credito</Text>
-                        <Text style={styles.amountValue}>174,00€</Text>
+                        <Text style={styles.amountValue}>
+                            {this.props.user.credit.toFixed(2)}€
+                        </Text>
                     </View>
                 </View>
                 <View style={styles.nav}>
@@ -70,6 +74,10 @@ const NavItem = props => {
     );
 };
 
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
 const mapDispatchToProps = dispatch => ({
     onClose: () =>
         dispatch(NavigationActions.navigate({routeName: 'DrawerClose'})),
@@ -81,7 +89,7 @@ const mapDispatchToProps = dispatch => ({
         ),
 });
 
-export default connect(null, mapDispatchToProps)(Drawer);
+export default connect(mapStateToProps, mapDispatchToProps)(Drawer);
 
 const styles = StyleSheet.create({
     headerContainer: {
