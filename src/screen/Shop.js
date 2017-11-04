@@ -68,11 +68,11 @@ class Shop extends Component {
                                 <Text style={styles.address}>
                                     {state.params.shop.link
                                         ? state.params.shop.link
-                                        : 'Corso Umberto I, 18 65020'}
+                                        : state.params.shop.street}
                                 </Text>
                                 {!state.params.shop.link && (
                                     <Text style={styles.city}>
-                                        San Valentino in Abruzzo Citeriore (PE)
+                                        {state.params.shop.city}
                                     </Text>
                                 )}
                             </View>
